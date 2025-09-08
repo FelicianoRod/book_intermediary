@@ -6,7 +6,7 @@ part of 'product_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getProductsRepHash() => r'76484dac51ffb6ab6c6f8660cf94392a6ee96ea4';
+String _$getProductsRepHash() => r'a3e0978dee1ce2fecc147fbcac17179b146e536c';
 
 /// See also [getProductsRep].
 @ProviderFor(getProductsRep)

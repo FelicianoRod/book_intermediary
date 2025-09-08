@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:developer' as developer;
 
 import '../../../data/repositories/customer_repository.dart';
 import '../../../data/repositories/product_repository.dart';
@@ -135,7 +136,12 @@ class CartPurchaseViewModel extends _$CartPurchaseViewModel {
   }
 
   Future<void> cartPurchase() async {
+    final errorList = ref.read(errorListProvider.notifier);
+
+    errorList.reset();
+
     state = const AsyncLoading();
+
     try {
       final cartPurchaseRepository = ref.read(cartPurchaseRepProvider.notifier);
       final vendor = 1;
@@ -143,9 +149,18 @@ class CartPurchaseViewModel extends _$CartPurchaseViewModel {
       final customer = ref.watch(selectedCustomerProvider);
       final shoppingCart = ref.watch(shoppingCartProvider);
 
+      if (shoppingCart.isEmpty) {
+        errorList.addError("No se ha puesto nada en el carrito");
+      }
+
+      if (customer == null) {
+        errorList.addError("No has seleccionado al cliente");
+      }
+
       if (shoppingCart.isNotEmpty) {
         if (customer != null) {
           cartPurchaseRepository.cartPurchase(1, customer.id, advancePayment ?? 0, shoppingCart);
+          developer.log("Se realizo el envío");
         }
       }
     } catch (e, st) {
@@ -168,6 +183,21 @@ class ErrorList extends _$ErrorList {
   @override
   List<String> build() {
     return [];
+  }
+
+  void addError(String error) {
+    state = [
+      ...state,
+      error
+    ];
+  }
+
+  void reset() {
+    state = [];
+  }
+
+  void removeError(String error) {
+    state = state.where((e) => e != error).toList();
   }
 }
 

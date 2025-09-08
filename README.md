@@ -1,4 +1,5 @@
-# Servicio de Plenitud del grupo En Busca de Sobriedad
+# Aun sin nombre
+Es una app que me permite gestionar la venta de libros con los clientes como también con los proveedores.
 
 # Cambiar el icono de la app
 

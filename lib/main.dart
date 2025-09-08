@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/providers/objectbox_provider.dart';
 import 'data/services/objectbox/objectbox.g.dart';
@@ -17,6 +19,13 @@ void main() async {
   final store = await openStore(directory: p.join(dir.path, "plenitud"));
   await seedDatabase(store);
   admin = Admin(store);
+
+  await dotenv.load(fileName: '.env');
+
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
 
   runApp(
     ProviderScope(

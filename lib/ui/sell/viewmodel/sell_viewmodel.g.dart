@@ -89,7 +89,7 @@ final advancePaymentProvider =
 
 typedef _$AdvancePayment = AutoDisposeNotifier<double?>;
 String _$cartPurchaseViewModelHash() =>
-    r'cb45f3254ff9616032f01ae1cfc0515dcc445969';
+    r'0e75fd801fb9887b82bdb386c79cb351229ac249';
 
 /// See also [CartPurchaseViewModel].
 @ProviderFor(CartPurchaseViewModel)
@@ -105,7 +105,7 @@ final cartPurchaseViewModelProvider =
     );
 
 typedef _$CartPurchaseViewModel = AutoDisposeAsyncNotifier<void>;
-String _$errorListHash() => r'834282cf5d64592441cf1030a7a6ea57fe78e03e';
+String _$errorListHash() => r'454dd2302a32bf61c43069ada983235544ccc8e0';
 
 /// See also [ErrorList].
 @ProviderFor(ErrorList)

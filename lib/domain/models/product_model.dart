@@ -21,4 +21,21 @@ class Product {
     required this.donation,
     required this.category,
   });
+
+  static Product fromJson(Map<String, dynamic> json) => Product(
+    id: json['id'] as int,
+    code: json['code'] as int,
+    name: json['name'] as String,
+    donation: (json['donation'] as int).toDouble(),
+    category: json['category']['name'] as String,
+  );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'id': id,
+    'code': code,
+    'name': name,
+    'donation': donation,
+    'category_id': category,
+  };
 }
+

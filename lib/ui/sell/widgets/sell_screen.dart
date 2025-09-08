@@ -10,7 +10,7 @@ class SellScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formGlobalKey = GlobalKey<FormState>();
+    // final _formGlobalKey = GlobalKey<FormState>();
     final customers = ref.watch(customersListProvider);
     final selectedCustomer = ref.watch(selectedCustomerProvider);
     final selectCustomer = ref.read(selectedCustomerProvider.notifier);
@@ -24,6 +24,8 @@ class SellScreen extends ConsumerWidget {
     final advancePayment = ref.watch(advancePaymentProvider);
     final advancePaymentNotifier = ref.watch(advancePaymentProvider.notifier);
 
+    final errorList = ref.watch(errorListProvider);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -34,47 +36,84 @@ class SellScreen extends ConsumerWidget {
           Expanded(
             child: Column(
               children: [
-                Form(
-                  key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      DropdownButtonFormField(
-                        value: selectedCustomer,
-                        decoration: const InputDecoration(
-                          label: Text('Cliente'),
-                        ),
-                        items: customers.map((customer) {
-                          return DropdownMenuItem(
-                            value: customer,
-                            child: Text(customer.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          selectCustomer.selectCustomer(value!);
-                        }
-                      ),
-                      TextFormField(
-                        controller: advancePaymentNotifier.controller,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: "Pago adelantado",
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          ref.read(cartPurchaseViewModelProvider.notifier).cartPurchase();
-                        },
-                        style: ElevatedButton.styleFrom(
+                // Form(
+                //   key: _formGlobalKey,
+                //   child: Column(
+                //     children: [
+                //       DropdownButtonFormField(
+                //         value: selectedCustomer,
+                //         decoration: const InputDecoration(
+                //           label: Text('Cliente'),
+                //         ),
+                //         items: customers.map((customer) {
+                //           return DropdownMenuItem(
+                //             value: customer,
+                //             child: Text(customer.name),
+                //           );
+                //         }).toList(),
+                //         onChanged: (value) {
+                //           selectCustomer.selectCustomer(value!);
+                //         }
+                //       ),
+                //       TextFormField(
+                //         // controller: advancePaymentNotifier.controller,
+                //         keyboardType: TextInputType.number,
+                //         decoration: const InputDecoration(
+                //           labelText: "Pago adelantado",
+                //         ),
+                //       ),
+                //       ElevatedButton(
+                //         onPressed: () {
+                //           ref.read(cartPurchaseViewModelProvider.notifier).cartPurchase();
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //
+                //         ),
+                //         child: const Text("Realizar compra")
+                //       ),
+                //       Text(""),
+                //     ]
+                //   )
+                // ),
+                DropdownButtonFormField(
+                    // value: selectedCustomer,
+                    decoration: const InputDecoration(
+                      label: Text('Cliente'),
+                    ),
+                    items: customers.map((customer) {
+                      return DropdownMenuItem(
+                        value: customer,
+                        child: Text(customer.name),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      selectCustomer.selectCustomer(value!);
+                    }
+                ),
+                TextField(
+                  controller: advancePaymentNotifier.controller,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: "Pago adelantado",
+                  ),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(cartPurchaseViewModelProvider.notifier).cartPurchase();
+                    },
+                    style: ElevatedButton.styleFrom(
 
-                        ),
-                        child: const Text("Realizar compra")
-                      ),
-                      Text(""),
-                    ]
-                  )
+                    ),
+                    child: const Text("Realizar compra")
+                ),
+
+                Column(
+                  children: errorList.map((e) {
+                    return Text(e);
+                  }).toList(),
                 )
-              ]
-            )
+              ],
+            ),
           ),
           Expanded(
             child: Column(
