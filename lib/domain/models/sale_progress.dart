@@ -20,4 +20,6 @@ class SaleProgress {
     required this.lastUpdated,
     required this.status,
   });
+
+
 }

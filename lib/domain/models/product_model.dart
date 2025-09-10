@@ -25,6 +25,7 @@ class Product {
   static Product fromJson(Map<String, dynamic> json) => Product(
     id: json['id'] as int,
     code: json['code'] as int,
+    // code: (json['code'] as double).toInt(),
     name: json['name'] as String,
     donation: (json['donation'] as int).toDouble(),
     category: json['category']['name'] as String,

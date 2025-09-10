@@ -1,9 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dart:developer' as developer;
 import 'package:servicio_sobriedad_plenitud/data/entities/bulk_sale_entity.dart';
 
+import '../../domain/models/bulk_sale_model.dart';
 import '../../domain/models/product_cart_model.dart';
+import '../../domain/models/single_sale_model.dart';
 import '../providers/objectbox_provider.dart';
 import '../services/sale_service.dart';
+import '../services/supabase/sale_service_supabase.dart';
 
 part 'sale_repository.g.dart';
 
@@ -122,4 +126,90 @@ class ResultGet<T> {
   factory ResultGet.success(T data)  => ResultGet._(data, null, "Datos obtenidos");
   factory ResultGet.error(String error) => ResultGet._(null, error, null);
 
+}
+
+// SALE IN PROGRESS
+@riverpod
+Future<List<BulkSale>> bulkSaleRepository(BulkSaleRepositoryRef ref) async {
+  final bulkSale = await ref.watch(bulkSaleServiceProvider.future);
+
+  return bulkSale;
+}
+
+
+@riverpod
+Future<List<SingleSale>> singleSaleRepository(
+    SingleSaleRepositoryRef ref, int id) async {
+  final singleSaleList = await ref.watch(singleSaleServiceProvider.future);
+
+  return singleSaleList;
+}
+
+@riverpod
+class BulkSaleDetailRepository extends _$BulkSaleDetailRepository {
+  @override
+  AsyncValue<List<SingleSale>> build(int idBulkSale) {
+    return ref.watch(bulkSaleDetailServiceProvider(idBulkSale));
+
+    // return asyncValue.when(
+    //     data: (data) {
+    //       developer.log('Devolviendo información - Repository');
+    //       return AsyncValue.data(data);
+    //     },
+    //     loading: () {
+    //       developer.log('Estamos en la espera de información - Repository');
+    //       return const AsyncValue.loading();
+    //     },
+    //     error: (error, stackTrace) {
+    //       developer.log('ALGO NO ANDA BIEN, ERROR! - Repository');
+    //       developer.log('$error');
+    //       developer.log('STACKTRACE - Repository');
+    //       developer.log('$stackTrace');
+    //       return AsyncValue.error(error, stackTrace);
+    //     }
+    // );
+  }
+  // @override
+  // FutureOr<List<SingleSale>> build(int idBulkSale) async {
+  //   try {
+  //     final dataList = await ref.watch(bulkSaleDetailServiceProvider(idBulkSale).future);
+  //     developer.log('Datos obtenidos - Repository');
+  //     return dataList;
+  //
+  //   } catch (e, st) {
+  //     developer.log('$e - Repository');
+  //     developer.log('$st - Repository');
+  //     return [];
+  //   }
+  //
+  //   // return asyncValue.when(
+  //   //   data: (data) {
+  //   //     developer.log('Devolviendo información - Repository');
+  //   //     return data;
+  //   //   },
+  //   //   loading: () {
+  //   //     developer.log('Estamos en la espera de información - Repository');
+  //   //     return [];
+  //   //   },
+  //   //   error: (error, stackTrace) {
+  //   //     developer.log('ALGO NO ANDA BIEN, ERROR! - Repository');
+  //   //     developer.log('$error');
+  //   //     developer.log('STACKTRACE - Repository');
+  //   //     developer.log('$stackTrace');
+  //   //     return [];
+  //   //   }
+  //   // );
+  //
+  //   // return asyncValue.maybeWhen(
+  //   //   data: (data) {
+  //   //     developer.log('Mostrando un registro para comprobar en Repository');
+  //   //     developer.log(data.first.product.name);
+  //   //     return data;
+  //   //   },
+  //   //   orElse: () {
+  //   //     developer.log("No hay información en Repository");
+  //   //     return [];
+  //   //   },
+  //   // );
+  // }
 }
