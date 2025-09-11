@@ -69,6 +69,20 @@ flutter:
     .env
   ]
 
+  fonts:
+    - family: Comme
+      fonts: [
+        assets/fonts/comme/comme_thin.ttf,
+        assets/fonts/comme/comme_extra_light.ttf,
+        assets/fonts/comme/comme_light.ttf,
+        assets/fonts/comme/comme_regular.ttf,
+        assets/fonts/comme/comme_medium.ttf,
+        assets/fonts/comme/comme_semi_bold.ttf,
+        assets/fonts/comme/comme_bold.ttf,
+        assets/fonts/comme/comme_extra_bold.ttf,
+        assets/fonts/comme/comme_black.ttf,
+      ]
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

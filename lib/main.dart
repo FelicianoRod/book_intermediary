@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'data/providers/objectbox_provider.dart';
 import 'data/services/objectbox/objectbox.g.dart';
 import 'router/app_router.dart';
+import 'utils/constants.dart';
 
 Admin? admin;
 
@@ -48,6 +49,26 @@ class MyApp extends ConsumerWidget {
         title: 'Plenitud AA',
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
+      theme: ThemeData(
+        fontFamily: 'Comme',
+        textTheme: TextTheme(
+          // this.displayLarge,
+          // this.displayMedium,
+          // this.displaySmall,
+          // this.headlineLarge,
+          // this.headlineMedium,
+          // this.headlineSmall,
+          // this.titleLarge,
+          titleMedium: Constants.textStyleTitleMedium,
+          // this.titleSmall,
+          // this.bodyLarge,
+          bodyMedium: Constants.textStyleBodyMedium,
+          // this.bodySmall,
+          // this.labelLarge,
+          // this.labelMedium,
+          // this.labelSmall,
+        )
+      )
     );
   }
 }
